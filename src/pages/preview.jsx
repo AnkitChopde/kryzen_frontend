@@ -21,17 +21,17 @@ const Preview = () => {
    }
 
   return (
-    <div>
+    <div  className='register-container'>
 
-      <div>
+      <div className="register-form">
       <h2>Form Preview</h2>
-      <div ref={componentRef}>
-        <p>Name: {formData.name}</p>
-        <p>Age: {formData.age}</p>
-        <p>Address: {formData.address}</p>
-        <img src={`http://your-api-url/${formData.photoPath}`} alt="User's Photo" style={{ maxWidth: '300px' }} />
+      <div >
+        <p>Name: </p>
+        <p>Age: </p>
+        <p>Address: </p>
+        <img src={``} alt="User's Photo" style={{ maxWidth: '300px' }} />
       </div>
-      <button onClick={handlePrint}>Download as PDF</button>
+      <button >Download as PDF</button>
     </div>
     </div>
   )
