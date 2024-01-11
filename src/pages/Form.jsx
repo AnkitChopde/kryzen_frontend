@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Form = () => {
   const [state, setState] = useState({
     name: "",
-    age: 0,
+    age: null,
     address: "",
     photo: null,
     loading: false,
@@ -25,19 +25,16 @@ const Form = () => {
 
   const handleForm = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("age", age);
-    formData.append("address", address);
-    formData.append("photo", photo);
+    
     setState({ ...state, loading: true });
+    console.log(isAuth.token)
     try {
       const response = await axios.post(
         "https://kryzen-backend.onrender.com/form/addFormDetails",
-        formData,
+        {name,age,address},
         {headers: {
-            'Content-Type': 'multipart/form-data', // Set content type for file upload
-            'token': isAuth.token,
+            
+            token: isAuth.token,
           }}
       );
       console.log(response);
@@ -50,7 +47,7 @@ const Form = () => {
   return (
     <div>
       <div className="register-container">
-        <form className="register-form" onSubmit={handleForm} encType="multipart/form-data">
+        <form className="register-form" action="/addFormDetails" method={"post"} onSubmit={handleForm}>
           <h2 style={{ textAlign: "center" }}>User Details Form</h2>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
@@ -69,7 +66,7 @@ const Form = () => {
               type="number"
               id="age"
               name="age"
-              value={age}
+              value={age === null ? "" : age}
               onChange={(e) => {
                 if (
                   /^[0-9.:]*$/.test(e.target.value) &&
@@ -92,16 +89,7 @@ const Form = () => {
               placeholder="Enter your Address"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="photo">User Photo:</label>
-            <input
-              type="file"
-              id="photo"
-              name="photo"
-              onChange={handlePhotoChange}
-              accept="image/*"
-            />
-          </div>
+          
           <button type="submit">Submit</button>
         </form>
       </div>
